@@ -1,0 +1,12 @@
+#!/bin/bash 
+
+ k=1000; 
+ for i in $(seq 301170 2 301710); 
+    do 
+    j="$(echo "scale=6; $i/100000" | bc)"; 
+    ./treewalk.out "$j" 16 "$k" >> lb.dat ; 
+    (head -n 2 fruits"$k".dat ; tail -n 3 fruits"$k".dat | head -n 2; tail -n+3 fruits"$k".dat | head -n -3; tail -n 1 fruits"$k".dat) > setup"$k".day 
+    ./dimsetup.out "$k"; 
+    ./computedim.out | tail -n 1 >> rb.dat
+    k="$((k+1))"; 
+done
